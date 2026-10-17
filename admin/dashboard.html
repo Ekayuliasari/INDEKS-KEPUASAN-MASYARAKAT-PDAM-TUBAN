@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Indeks Kepuasan Masyarakat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0284c7',
+                        primaryDark: '#0369a1',
+                        primaryLight: '#e0f2fe',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="bg-primary shadow-md text-white">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="h-10 bg-white rounded-lg flex items-center justify-center overflow-hidden px-1 py-0.5">
+                    <img src="../assets/logo.jpeg" alt="Logo" class="h-8 w-auto object-contain">
+                </div>
+                <div>
+                    <h1 class="font-bold text-sm sm:text-base leading-tight">PERUMDA AIR MINUM TIRTA LESTARI</h1>
+                    <p class="text-xs text-sky-100">Dashboard Admin SKM - Cabang I Merakurak</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-sky-100 hidden sm:inline">Halo, <strong>admin_merakurak</strong></span>
+                <button onclick="logout()" class="bg-sky-700 hover:bg-sky-800 text-white text-xs px-3 py-1.5 rounded-lg border border-sky-600 transition-colors">
+                    🚪 Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
+
+        <!-- Statistik Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Total Responden -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Responden</p>
+                    <h3 id="statTotal" class="text-3xl font-bold text-slate-900 mt-1">0</h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-sky-50 text-primary flex items-center justify-center text-2xl">
+                    👥
+                </div>
+            </div>
+
+            <!-- Nilai IKM -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Nilai IKM (Skala 100)</p>
+                    <h3 id="statIKM" class="text-3xl font-bold text-primary mt-1">0,00</h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl">
+                    📊
+                </div>
+            </div>
+
+            <!-- Mutu Pelayanan -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Mutu Pelayanan</p>
+                    <h3 id="statMutu" class="text-3xl font-bold text-slate-900 mt-1">-</h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl">
+                    ⭐
+                </div>
+            </div>
+        </div>
+
+        <!-- Rincian Nilai Per Unsur Pelayanan -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
+            <h3 class="text-lg font-bold text-slate-900">Rata-Rata Per Unsur Pelayanan</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span>1. Kesesuaian Persyaratan</span>
+                    <strong id="avg_u1" class="text-primary text-sm">0,00</strong>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span>2. Kemudahan Prosedur</span>
+                    <strong id="avg_u2" class="text-primary text-sm">0,00</strong>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span>3. Kecepatan Waktu</span>
+                    <strong id="avg_u3" class="text-primary text-sm">0,00</strong>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span>4. Kewajaran Biaya/Tarif</span>
+                    <strong id="avg_u4" class="text-primary text-sm">0,00</strong>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span>5. Kesesuaian Produk</span>
+                    <strong id="avg_u5" class="text-primary text-sm">0,00</strong>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span>6. Kompetensi Petugas</span>
+                    <strong id="avg_u6" class="text-primary text-sm">0,00</strong>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span>7. Perilaku Petugas</span>
+                    <strong id="avg_u7" class="text-primary text-sm">0,00</strong>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span>8. Kualitas Sarana & Prasarana</span>
+                    <strong id="avg_u8" class="text-primary text-sm">0,00</strong>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span>9. Penanganan Pengaduan</span>
+                    <strong id="avg_u9" class="text-primary text-sm">0,00</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabel Data Responden & Saran -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Daftar Responden & Saran</h3>
+                    <p class="text-xs text-slate-500">Semua riwayat survei yang masuk dari masyarakat.</p>
+                </div>
+                <button onclick="resetData()" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs px-3 py-1.5 rounded-lg font-medium transition-colors">
+                    🗑️ Reset Data Demo
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-700 uppercase font-semibold">
+                            <th class="p-3">No</th>
+                            <th class="p-3">Tanggal</th>
+                            <th class="p-3">L/P</th>
+                            <th class="p-3">Usia</th>
+                            <th class="p-3">Pendidikan</th>
+                            <th class="p-3">Pekerjaan</th>
+                            <th class="p-3">Layanan</th>
+                            <th class="p-3 text-center">Rata2 Nilai</th>
+                            <th class="p-3">Kritik / Saran</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-200">
+                        <!-- Data injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white text-center py-6 text-xs mt-12">
+        <div class="max-w-7xl mx-auto px-4 space-y-1">
+            <p class="font-medium">PERUMDA Air Minum Tirta Lestari Kabupaten Tuban</p>
+            <p class="text-slate-400">Unit Layanan Cabang I Merakurak &copy; 2026. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Dashboard Logic & DB Integration Hook -->
+    <script>
+        // Cek autentikasi admin
+        if (localStorage.getItem('pdam_admin_logged') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('pdam_admin_logged');
+            window.location.href = 'login.html';
+        }
+
+        // Dummy data awal jika localStorage masih kosong agar dashboard langsung hidup saat demo
+        function initDummyData() {
+            let data = JSON.parse(localStorage.getItem('pdam_ikm_respondents')) || [];
+            if (data.length === 0) {
+                data = [
+                    {
+                        tanggal_survei: '2026-10-15', jenis_kelamin: 'L', usia: 35, pendidikan: 'S1', pekerjaan: 'PNS', pekerjaan_lainnya: '', jenis_layanan: 'Pasang Baru',
+                        u1: 4, u2: 4, u3: 3, u4: 4, u5: 4, u6: 4, u7: 4, u8: 3, u9: 4, saran: 'Pelayanan sangat cepat dan ramah, pertahankan.', created_at: '2026-10-15'
+                    },
+                    {
+                        tanggal_survei: '2026-10-16', jenis_kelamin: 'P', usia: 28, pendidikan: 'SMA', pekerjaan: 'WIRAUSAHA', pekerjaan_lainnya: '', jenis_layanan: 'Kas dan Penagihan',
+                        u1: 3, u2: 4, u3: 4, u4: 3, u5: 4, u6: 3, u7: 4, u8: 4, u9: 4, saran: 'Mohon loket pembayaran ditambah agar antrean lebih singkat.', created_at: '2026-10-16'
+                    },
+                    {
+                        tanggal_survei: '2026-10-17', jenis_kelamin: 'L', usia: 42, pendidikan: 'D1/D2/D3', pekerjaan: 'SWASTA', pekerjaan_lainnya: '', jenis_layanan: 'Laporan Pengaduan',
+                        u1: 4, u2: 3, u3: 4, u4: 4, u5: 3, u6: 4, u7: 4, u8: 4, u9: 3, saran: 'Pengaduan air macet ditanggapi dengan baik.', created_at: '2026-10-17'
+                    }
+                ];
+                localStorage.setItem('pdam_ikm_respondents', JSON.stringify(data));
+            }
+            return data;
+        }
+
+        function loadDashboardData() {
+            /* =========================================================================
+               [PANDUAN INTEGRASI DATABASE MYSQL / PHP]
+               Jika sudah beralih ke database MySQL, ganti pengambilan data dari localStorage
+               ini dengan AJAX / Fetch ke file PHP (misal: get-data.php) yang melakukan 
+               query SELECT ke tabel responden & jawaban_survei.
+               ========================================================================= */
+
+            const respondents = initDummyData();
+            const total = respondents.length;
+            document.getElementById('statTotal').innerText = total;
+
+            if (total === 0) {
+                document.getElementById('statIKM').innerText = '0,00';
+                document.getElementById('statMutu').innerText = '-';
+                document.getElementById('tableBody').innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400">Belum ada data survei yang masuk.</td></tr>`;
+                return;
+            }
+
+            // Hitung rata-rata per unsur
+            let sum = { u1: 0, u2: 0, u3: 0, u4: 0, u5: 0, u6: 0, u7: 0, u8: 0, u9: 0 };
+            respondents.forEach(r => {
+                sum.u1 += r.u1; sum.u2 += r.u2; sum.u3 += r.u3;
+                sum.u4 += r.u4; sum.u5 += r.u5; sum.u6 += r.u6;
+                sum.u7 += r.u7; sum.u8 += r.u8; sum.u9 += r.u9;
+            });
+
+            let avg = {
+                u1: sum.u1 / total, u2: sum.u2 / total, u3: sum.u3 / total,
+                u4: sum.u4 / total, u5: sum.u5 / total, u6: sum.u6 / total,
+                u7: sum.u7 / total, u8: sum.u8 / total, u9: sum.u9 / total
+            };
+
+            // Render unsur ratarata
+            for (let i = 1; i <= 9; i++) {
+                document.getElementById(`avg_u${i}`).innerText = avg[`u` + i].toFixed(2).replace('.', ',');
+            }
+
+            let totalRataRata = (avg.u1 + avg.u2 + avg.u3 + avg.u4 + avg.u5 + avg.u6 + avg.u7 + avg.u8 + avg.u9) / 9;
+            let nilaiIKM = totalRataRata * 25;
+
+            document.getElementById('statIKM').innerText = nilaiIKM.toFixed(2).replace('.', ',');
+
+            let mutu = '-';
+            let kinerja = '-';
+            if (nilaiIKM >= 88.31) { mutu = 'A'; kinerja = 'Sangat Baik'; }
+            else if (nilaiIKM >= 76.61) { mutu = 'B'; kinerja = 'Baik'; }
+            else if (nilaiIKM >= 65.00) { mutu = 'C'; kinerja = 'Kurang Baik'; }
+            else { mutu = 'D'; kinerja = 'Tidak Baik'; }
+
+            document.getElementById('statMutu').innerHTML = `Mutu ${mutu} <span class="text-sm font-normal text-slate-500">(${kinerja})</span>`;
+
+            // Render Tabel
+            let html = '';
+            respondents.forEach((r, index) => {
+                let avgRes = (r.u1 + r.u2 + r.u3 + r.u4 + r.u5 + r.u6 + r.u7 + r.u8 + r.u9) / 9;
+                let pekerjaanText = r.pekerjaan === 'Lainnya' ? r.pekerjaan_lainnya : r.pekerjaan;
+                html += `
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-medium text-slate-900">${index + 1}</td>
+                        <td class="p-3 text-slate-600">${r.tanggal_survei}</td>
+                        <td class="p-3 font-semibold">${r.jenis_kelamin}</td>
+                        <td class="p-3">${r.usia} th</td>
+                        <td class="p-3">${r.pendidikan}</td>
+                        <td class="p-3">${pekerjaanText}</td>
+                        <td class="p-3 font-medium text-primary">${r.jenis_layanan}</td>
+                        <td class="p-3 text-center font-bold text-slate-900">${avgRes.toFixed(2)}</td>
+                        <td class="p-3 text-slate-600 italic">${r.saran ? r.saran : '-'}</td>
+                    </tr>
+                `;
+            });
+            document.getElementById('tableBody').innerHTML = html;
+        }
+
+        function resetData() {
+            if (confirm('Yakin ingin mereset seluruh data demo?')) {
+                localStorage.removeItem('pdam_ikm_respondents');
+                loadDashboardData();
+            }
+        }
+
+        window.onload = loadDashboardData;
+    </script>
+</body>
+</html>
