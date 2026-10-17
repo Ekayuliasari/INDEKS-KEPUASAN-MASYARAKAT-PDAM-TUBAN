@@ -22,9 +22,8 @@
     </script>
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
 
@@ -374,70 +373,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript & LocalStorage / Database Integration Hook -->
-    <script>
-        document.getElementById('tanggal_survei').valueAsDate = new Date();
-
-        function togglePekerjaanLain(val) {
-            const wrapper = document.getElementById('wrapper_pekerjaan_lainnya');
-            const inputLain = document.getElementById('pekerjaan_lainnya');
-            if (val === 'Lainnya') {
-                wrapper.classList.remove('hidden');
-                inputLain.setAttribute('required', 'true');
-            } else {
-                wrapper.classList.add('hidden');
-                inputLain.removeAttribute('required');
-                inputLain.value = '';
-            }
-        }
-
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            
-            const formData = {
-                tanggal_survei: document.getElementById('tanggal_survei').value,
-                jenis_kelamin: document.querySelector('input[name="jenis_kelamin"]:checked').value,
-                usia: document.getElementById('usia').value,
-                pendidikan: document.getElementById('pendidikan').value,
-                pekerjaan: document.getElementById('pekerjaan').value,
-                pekerjaan_lainnya: document.getElementById('pekerjaan_lainnya').value,
-                jenis_layanan: document.querySelector('input[name="jenis_layanan"]:checked').value,
-                u1: parseInt(document.querySelector('input[name="u1"]:checked').value),
-                u2: parseInt(document.querySelector('input[name="u2"]:checked').value),
-                u3: parseInt(document.querySelector('input[name="u3"]:checked').value),
-                u4: parseInt(document.querySelector('input[name="u4"]:checked').value),
-                u5: parseInt(document.querySelector('input[name="u5"]:checked').value),
-                u6: parseInt(document.querySelector('input[name="u6"]:checked').value),
-                u7: parseInt(document.querySelector('input[name="u7"]:checked').value),
-                u8: parseInt(document.querySelector('input[name="u8"]:checked').value),
-                u9: parseInt(document.querySelector('input[name="u9"]:checked').value),
-                saran: document.getElementById('saran').value,
-                created_at: new Date().toISOString()
-            };
-
-            /* =========================================================================
-               [PANDUAN INTEGRASI DATABASE MYSQL / PHP]
-               Jika sudah di-acc dan ingin dihubungkan ke database MySQL (PHP backend),
-               ganti blok LocalStorage di bawah ini dengan AJAX / Fetch API ke file PHP (misal: submit.php):
-               
-               fetch('submit.php', {
-                   method: 'POST',
-                   headers: { 'Content-Type': 'application/json' },
-                   body: JSON.stringify(formData)
-               })
-               .then(response => response.json())
-               .then(data => { window.location.href = 'terima-kasih.html'; })
-               .catch(error => alert('Gagal mengirim data!'));
-               ========================================================================= */
-
-            // 1. Simpan ke LocalStorage untuk Demo GitHub Pages
-            let existingData = JSON.parse(localStorage.getItem('pdam_ikm_respondents')) || [];
-            existingData.unshift(formData); // Taruh di urutan paling atas
-            localStorage.setItem('pdam_ikm_respondents', JSON.stringify(existingData));
-
-            // Redirect ke halaman terima kasih
-            window.location.href = 'terima-kasih.html';
-        }
-    </script>
+    <!-- Custom JavaScript -->
+    <script src="assets/script.js"></script>
 </body>
 </html>
